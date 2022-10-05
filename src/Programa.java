@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Stack;
 import java.util.concurrent.Semaphore;
 
 public class Programa extends JFrame implements Runnable {
@@ -8,10 +9,13 @@ public class Programa extends JFrame implements Runnable {
     private JButton startButton;
     private JButton stopButton;
     private JLabel infoBuffer;
-    private JLabel infoProdutor;
-    private JLabel infoConsumidor;
+    private JLabel infoProdutor1;
+    private JLabel infoConsumidor1;
+    private JLabel infoProdutor2;
+    private JLabel infoConsumidor2;
+    private JLabel infoProdutor3;
     public static Programa sistema;
-    static int[] buffer = new int[5];
+    static Stack<Integer> buffer = new Stack<>();
     static Semaphore semaforo = new Semaphore(1);
     static Produtor[] produtores = new Produtor[3];
     static Consumidor[] consumidores = new Consumidor[2];
@@ -55,6 +59,14 @@ public class Programa extends JFrame implements Runnable {
         pack();
     }
 
+    public static void atualizarLabels() {
+        Programa.sistema.getInfoProdutor().setText(produtores[0].getStatus());
+        Programa.sistema.infoProdutor2().setText(produtores[1].getStatus());
+        Programa.sistema.infoProdutor3().setText(produtores[2].getStatus());
+        Programa.sistema.getInfoConsumidor().setText(consumidores[0].getStatus());
+        Programa.sistema.infoConsumidor2().setText(consumidores[1].getStatus());
+    }
+
     @Override
     public void run() {
         if(!isVisible()){
@@ -69,10 +81,22 @@ public class Programa extends JFrame implements Runnable {
     }
 
     public JLabel getInfoProdutor() {
-        return infoProdutor;
+        return infoProdutor1;
+    }
+
+    public JLabel infoProdutor2() {
+        return infoProdutor2;
+    }
+
+    public JLabel infoProdutor3() {
+        return infoProdutor3;
     }
 
     public JLabel getInfoConsumidor() {
-        return infoConsumidor;
+        return infoConsumidor1;
+    }
+
+    public JLabel infoConsumidor2() {
+        return infoConsumidor2;
     }
 }

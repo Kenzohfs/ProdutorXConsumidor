@@ -1,10 +1,9 @@
-import javax.swing.*;
-import java.util.Arrays;
 import java.util.concurrent.Semaphore;
 
 public class Consumidor extends Thread {
     private int id;
     private Semaphore semaforo;
+    private String status;
 
     public Consumidor(int id, Semaphore semaforo) {
         this.id = id;
@@ -28,7 +27,8 @@ public class Consumidor extends Thread {
 
     public void esperar() {
         try {
-            Programa.sistema.getInfoConsumidor().setText("Consumidor " + id + " esperando!");
+            this.status = "Consumidor " + id + " esperando";
+            Programa.atualizarLabels();
             System.out.println("Consumidor " + id + " esperando!");
             Thread.sleep((long) (Math.random() * 1000));
         } catch (Exception e) {
@@ -38,6 +38,8 @@ public class Consumidor extends Thread {
 
     public void consumir() {
         try {
+            this.status = "Consumidor " + id + " consumindo";
+            Programa.atualizarLabels();
             Thread.sleep((long) (Math.random() * 10000));
             consumirArray();
         } catch (Exception e) {
@@ -46,16 +48,16 @@ public class Consumidor extends Thread {
     }
 
     public void consumirArray() {
-        for (int i = 0; i < Programa.buffer.length; i++) {
-            if (Programa.buffer[i] != 0) {
-                Programa.buffer[i] = 0;
-                Programa.sistema.getInfoConsumidor().setText("Consumidor " + id + " consumiu!");
-                System.out.println("Consumidor " + id + " consumiu!");
-                Programa.sistema.getBuffer().setText(Arrays.toString(Programa.buffer));
-                System.out.println(Programa.buffer[0] + " " + Programa.buffer[1] + " " + Programa.buffer[2]);
-                break;
-            }
+        if (Programa.buffer.size() > 0) {
+            Programa.buffer.pop();
+            System.out.println("Consumidor " + id + " consumiu!");
+            Programa.sistema.getBuffer().setText(Programa.buffer.toString());
+            System.out.println(Programa.buffer.toString());
         }
         esperar();
+    }
+
+    public String getStatus() {
+        return status;
     }
 }
