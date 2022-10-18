@@ -43,10 +43,10 @@ public class Programa extends JFrame implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < produtores.length; i++) {
-                    produtores[i].stop();
+                    produtores[i].setRodar(false);
                 }
                 for (int i = 0; i < consumidores.length; i++) {
-                    consumidores[i].stop();
+                    consumidores[i].setRodar(false);
                 }
             }
         });

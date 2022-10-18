@@ -4,6 +4,7 @@ public class Consumidor extends Thread {
     private int id;
     private Semaphore semaforo;
     private String status;
+    private Boolean rodar = true;
 
     public Consumidor(int id, Semaphore semaforo) {
         this.id = id;
@@ -12,7 +13,7 @@ public class Consumidor extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        while (rodar) {
             esperar();
             try {
                 semaforo.acquire(1);
@@ -59,5 +60,9 @@ public class Consumidor extends Thread {
 
     public String getStatus() {
         return status;
+    }
+
+    public void setRodar(Boolean rodar) {
+        this.rodar = rodar;
     }
 }
