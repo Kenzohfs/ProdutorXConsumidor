@@ -1,0 +1,7 @@
+br.senai.sc.operadoras.controller
+br.senai.sc.operadoras.model.dao
+br.senai.sc.operadoras.model.entities
+br.senai.sc.operadoras.model.exceptions
+br.senai.sc.operadoras.model.factory
+br.senai.sc.operadoras.model.service
+br.senai.sc.operadoras.view
